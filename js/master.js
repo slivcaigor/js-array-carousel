@@ -1,32 +1,54 @@
-/* 
-Consegna:
-Dato un array contenente una lista di cinque immagini (che create voi in base alle img che vi passo),
-creare un carosello come nello screenshot allegato.
-MILESTONE 1
-Per prima cosa, creiamo il markup statico: costruiamo il container e inseriamo un’immagine grande al centro: avremo così la struttura base e gli stili pronti per poterci poi concentrare solamente sull’aspetto logico.
-MILESTONE 2
-Adesso rimuoviamo tutto il markup statico e inseriamo tutte le immagini dinamicamente servendoci dell’array fornito e un semplice ciclo for che concatena un template literal. Tutte le immagini saranno nascoste, tranne la prima, che avrà una classe specifica che la renderà visibile. Al termine di questa fase ci ritroveremo con lo stesso slider stilato nella milestone 1, ma costruito dinamicamente attraverso JavaScript.
-MILESTONE 3
-Al click dell’utente sulle frecce, il programma cambierà l’immagine attiva, che quindi verrà visualizzata al posto della precedente/successiva.
-*/
+// Array of slider images
+const slider = ["./img/01.webp", "./img/02.webp", "./img/03.webp", "./img/04.webp", "./img/05.webp"];
 
-const slides = document.getElementsByClassName('slide');
-console.log(slides);
+let currentIndex = 0;
 
-let activeSlide = 0;
+// Big image slide section
+const bigSlide = document.querySelector(".ms_bigSlide");
+for (let i = 0; i < slider.length; i++) {
+  const slideSrc = slider[i];
 
-const next = document.querySelector('.next');
+  let activeClass = "";
 
-next.addEventListener('click', function () {
-  if (activeSlide < slides.length - 1) {
-    slides[activeSlide].classList.remove('active');
-
-    activeSlide++;
-
-    slides[activeSlide].classList.add('active');
-
-    if (activeSlide === slides.length - 1) {
-      next.classList.add('hidden');
-    }
+  if (i === currentIndex) {
+    activeClass = "active";
   }
+  let tagActiveImage = `<img class="${activeClass}" src="${slideSrc}">`;
+  bigSlide.innerHTML += tagActiveImage;
+}
+
+
+
+// Next slide arrow
+const next = document.querySelector(".ms_next");
+next.addEventListener("click", function () {
+
+  const activeSlide = document.querySelector(".active");
+  activeSlide.classList.remove('active');
+
+  currentIndex++;
+  if (currentIndex > slider.length - 1) {
+    currentIndex = 0;
+  }
+  const imageTag = bigSlide.querySelectorAll("img");
+  const newActiveSlide = imageTag[currentIndex];
+  newActiveSlide.classList.add('active');
 });
+
+
+// Prev slide arrow
+const prev = document.querySelector(".ms_prev");
+prev.addEventListener("click", function () {
+  const activeSlide = document.querySelector(".active");
+  activeSlide.classList.remove('active');
+
+  currentIndex--;
+  if (currentIndex < 0) {
+    currentIndex = slider.length - 1;
+  }
+  const imageTag = bigSlide.querySelectorAll("img");
+  const newActiveSlide = imageTag[currentIndex];
+  newActiveSlide.classList.add('active');
+});
+
+
