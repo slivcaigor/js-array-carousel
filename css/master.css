@@ -45,3 +45,11 @@ body {
   object-fit: cover;
   opacity: .6;
 }
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}

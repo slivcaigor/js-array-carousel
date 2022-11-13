@@ -4,9 +4,9 @@ const slider = ["./img/01.webp", "./img/02.webp", "./img/03.webp", "./img/04.web
 let currentIndex = 0;
 
 // Big image slide section
-const bigSlide = document.querySelector(".ms_bigSlide");
+let bigSlide = document.querySelector(".ms_bigSlide");
 for (let i = 0; i < slider.length; i++) {
-  const slideSrc = slider[i];
+  let slideSrc = slider[i];
 
   let activeClass = "";
 
@@ -20,35 +20,52 @@ for (let i = 0; i < slider.length; i++) {
 
 
 // Next slide arrow
-const next = document.querySelector(".ms_next");
+let next = document.querySelector(".ms_next");
 next.addEventListener("click", function () {
 
-  const activeSlide = document.querySelector(".active");
+  let activeSlide = document.querySelector(".active");
   activeSlide.classList.remove('active');
 
   currentIndex++;
   if (currentIndex > slider.length - 1) {
     currentIndex = 0;
   }
-  const imageTag = bigSlide.querySelectorAll("img");
-  const newActiveSlide = imageTag[currentIndex];
+
+  let imageTag = bigSlide.querySelectorAll("img");
+  let newActiveSlide = imageTag[currentIndex];
   newActiveSlide.classList.add('active');
+
+  if (currentIndex === slider.length - 1) {
+    next.classList.add('hidden');
+  }
+
+  if (currentIndex !== slider.length - 1) {
+    prev.classList.remove('hidden');
+  }
 });
 
 
 // Prev slide arrow
-const prev = document.querySelector(".ms_prev");
+let prev = document.querySelector(".ms_prev");
 prev.addEventListener("click", function () {
-  const activeSlide = document.querySelector(".active");
+  let activeSlide = document.querySelector(".active");
   activeSlide.classList.remove('active');
 
   currentIndex--;
   if (currentIndex < 0) {
     currentIndex = slider.length - 1;
   }
-  const imageTag = bigSlide.querySelectorAll("img");
-  const newActiveSlide = imageTag[currentIndex];
+  let imageTag = bigSlide.querySelectorAll("img");
+  let newActiveSlide = imageTag[currentIndex];
   newActiveSlide.classList.add('active');
+
+  if (currentIndex !== slider.length - 1) {
+    next.classList.remove('hidden');
+  }
+
+  if (currentIndex == slider.length - 1) {
+    prev.classList.add('hidden');
+  }
 });
 
 
